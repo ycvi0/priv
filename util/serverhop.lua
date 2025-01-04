@@ -1,3 +1,4 @@
+--kaka
 -- Script for teleportation and server management
 local HttpService = game:GetService("HttpService")
 local TeleportService = game:GetService("TeleportService")
@@ -93,8 +94,8 @@ local function tryUnusedServers()
     while #UnusedIDs > 0 do
         local ID = table.remove(UnusedIDs, 1)
         print("Trying unused server ID:", ID)
-        saveIDs()
         tryTeleport(ID)
+        saveIDs()
         task.wait(4)
     end
 end
@@ -128,14 +129,18 @@ local function TPReturner()
                 if not table.find(AllIDs, ID) then
                     print("Suitable server found:", ID)
                     tryTeleport(ID)
+                    saveIDs()
                     task.wait(4)
                 else
                     print("Server ID already used, adding to unused servers:", ID)
                     table.insert(UnusedIDs, ID)
-                    saveIDs()
                 end
             end
         end
+
+        -- Remove processed servers from the current list
+        Site.data = nil
+        saveIDs()
 
         pagesFetched = pagesFetched + 1
         task.wait(requestDelay)
