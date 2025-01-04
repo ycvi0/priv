@@ -1,5 +1,4 @@
---kaka
--- Script for teleportation and server management
+-- Script for teleportation and server managementnn
 local HttpService = game:GetService("HttpService")
 local TeleportService = game:GetService("TeleportService")
 local Players = game:GetService("Players")
@@ -12,8 +11,8 @@ local actualHour = os.date("%H")
 local AllIDs = {}
 local UnusedIDs = {}
 local foundAnything = nil
-local maxPagesPerSession = 5
-local requestDelay = 10 -- seconds between each server fetch
+local maxPagesPerSession = 7
+local requestDelay = 8 -- seconds between each server fetch
 
 -- Load IDs from files
 local function loadIDs()
