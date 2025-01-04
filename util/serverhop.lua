@@ -1,4 +1,4 @@
--- Script for teleportation and server managementnn
+-- Script for teleportation and server management
 local HttpService = game:GetService("HttpService")
 local TeleportService = game:GetService("TeleportService")
 local Players = game:GetService("Players")
@@ -11,8 +11,7 @@ local actualHour = os.date("%H")
 local AllIDs = {}
 local UnusedIDs = {}
 local foundAnything = nil
-local maxPagesPerSession = 7
-local requestDelay = 8 -- seconds between each server fetch
+local maxPagesPerSession = 5
 
 -- Load IDs from files
 local function loadIDs()
@@ -106,8 +105,7 @@ local function TPReturner()
         local Site = fetchServers(foundAnything)
         
         if not Site then
-            print("Failed to fetch servers. Retrying after delay...")
-            task.wait(requestDelay)
+            print("Failed to fetch servers. Retrying...")
             break
         end
         
@@ -132,17 +130,18 @@ local function TPReturner()
                     task.wait(4)
                 else
                     print("Server ID already used, adding to unused servers:", ID)
-                    table.insert(UnusedIDs, ID)
+                    -- Add ID to UnusedIDs only if it's not in AllIDs
+                    if not table.find(UnusedIDs, ID) and not table.find(AllIDs, ID) then
+                        table.insert(UnusedIDs, ID)
+                    end
                 end
             end
         end
 
         -- Remove processed servers from the current list
-        Site.data = nil
         saveIDs()
 
         pagesFetched = pagesFetched + 1
-        task.wait(requestDelay)
     until not foundAnything or pagesFetched >= maxPagesPerSession
 
     print("Finished fetching servers for this session.")
