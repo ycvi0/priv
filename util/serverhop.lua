@@ -1,4 +1,4 @@
--- Script for teleportation and server management
+-- Script for teleportation and server management dawga
 local HttpService = game:GetService("HttpService")
 local TeleportService = game:GetService("TeleportService")
 local Players = game:GetService("Players")
@@ -159,4 +159,3 @@ end
 
 loadIDs()
 Teleport()
-``
