@@ -1,4 +1,4 @@
--- Script for teleportation and server management
+--just work bro
 local HttpService = game:GetService("HttpService")
 local TeleportService = game:GetService("TeleportService")
 local Players = game:GetService("Players")
@@ -121,15 +121,15 @@ local function tryUnusedServers()
         print("Trying unused server ID:", ID)
         tryTeleport(ID)
         saveIDs()
-        task.wait(math.random(65, 70) / 10) -- Add a delay between 6.5 and 7 seconds
+        task.wait(4) -- Normal delay between teleport attempts
     end
 end
 
 -- Main function to find and teleport to a suitable server
 local function TPReturner()
-    repeat
-        local Site = fetchServers(foundAnything)
+    local Site = fetchServers(foundAnything) -- Fetch servers outside the repeat loop
 
+    repeat
         if not Site then
             print("Failed to fetch servers. Retrying...")
             break
@@ -148,12 +148,13 @@ local function TPReturner()
             local ID = tostring(server.id)
             print("Checking server ID:", ID, "Players:", server.playing, "/", server.maxPlayers)
 
+            task.wait(4) -- Wait before processing each server
+
             if tonumber(server.maxPlayers) > tonumber(server.playing) then
                 if not table.find(AllIDs, ID) then
                     print("Suitable server found:", ID)
                     tryTeleport(ID)
                     saveIDs()
-                    task.wait(math.random(65, 70) / 10) -- Add a delay between 6.5 and 7 seconds
                 else
                     print("Server ID already used, adding to unused servers:", ID)
                     -- Add ID to UnusedIDs only if it's not in AllIDs
