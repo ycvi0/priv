@@ -11,7 +11,6 @@ local actualHour = os.date("%H")
 local AllIDs = {}
 local UnusedIDs = {}
 local foundAnything = nil
-local maxPagesPerSession = 5
 
 -- Load IDs from files
 local function loadIDs()
@@ -100,7 +99,6 @@ end
 
 -- Main function to find and teleport to a suitable server
 local function TPReturner()
-    local pagesFetched = 0
     repeat
         local Site = fetchServers(foundAnything)
         
@@ -140,9 +138,7 @@ local function TPReturner()
 
         -- Remove processed servers from the current list
         saveIDs()
-
-        pagesFetched = pagesFetched + 1
-    until not foundAnything or pagesFetched >= maxPagesPerSession
+    until not foundAnything
 
     print("Finished fetching servers for this session.")
 end
@@ -163,3 +159,4 @@ end
 
 loadIDs()
 Teleport()
+``
