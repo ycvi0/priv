@@ -1,4 +1,4 @@
---just work bro
+--just work bro ffs
 local HttpService = game:GetService("HttpService")
 local TeleportService = game:GetService("TeleportService")
 local Players = game:GetService("Players")
@@ -118,10 +118,10 @@ end)
 local function tryUnusedServers()
     while #UnusedIDs > 0 do
         local ID = table.remove(UnusedIDs, 1)
+                task.wait(6.5) -- Normal delay between teleport attempts
         print("Trying unused server ID:", ID)
         tryTeleport(ID)
         saveIDs()
-        task.wait(4) -- Normal delay between teleport attempts
     end
 end
 
